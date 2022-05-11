@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
     [SerializeField] int maxPosX = 5;
-    [SerializeField] MeshRenderer renderer;
-    [SerializeField] GameData data;
-    [SerializeField] ParticleSystem splatFx;
+    [SerializeField] MeshRenderer _renderer;
+    [SerializeField] GameData _data;
+    [SerializeField] ParticleSystem _splatFx;
+
+    public AudioSource _bounceSound;
 
     Vector3 childPos;
 
@@ -16,32 +16,40 @@ public class Platform : MonoBehaviour
 
     private void Start()
     {
-        renderer.material = data.GetRandomMaterial;
+        _renderer.material = _data.GetRandomMaterial;
 
         childPos = transform.GetChild(0).transform.localPosition;
+
         childPos.x = UnityEngine.Random.Range(-maxPosX, maxPosX + 1);
+
         transform.GetChild(0).transform.localPosition = childPos;
 
-        LeanTween.moveLocalY(renderer.transform.gameObject, -.5f, .5f).setEase(LeanTweenType.easeOutQuad);
-    }
+        LeanTween.moveLocalY(_renderer.transform.gameObject, -.5f, .5f).setEase(LeanTweenType.easeOutQuad);
+
+        _bounceSound = GetComponent<AudioSource>();
+    } // End Start.
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.GetContact(0).normal.y != -1f) return;
+        if (collision.GetContact(0).normal.y != -1f)
+        {
+            return;
+        } // End if.
 
         if (collision.collider.CompareTag("Player"))
         {
             OnCollideWithPlayer?.Invoke();
-            splatFx.transform.position = collision.GetContact(0).point + (Vector3.up * .01f);
-            splatFx.Play();
-        }
-    }
+            _splatFx.transform.position = collision.GetContact(0).point + (Vector3.up * .05f);
+            _splatFx.Play();
+            _bounceSound.Play();
+        } // End if.
+    } // End OnCollisionEnter.
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("wall"))
+        if (other.CompareTag("Wall"))
         {
             Destroy(gameObject);
-        }
-    }
-}
+        } // End if.
+    } // End OnTriggerEnter.
+} // End script.
