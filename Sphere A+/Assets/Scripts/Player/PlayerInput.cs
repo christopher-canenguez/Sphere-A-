@@ -12,12 +12,14 @@ public class PlayerInput : MonoBehaviour
         get; private set;
     } // End UnityEvent.
 
+    // Slider to allow player to move object from left to right.
     [SerializeField] Slider _uiSlider;
 
     bool firstMove = false;
 
     public static event Action<float> OnPointerDrag;
 
+    // Get slider listener to check if it was moved throughout the running of the game.
     private void Awake()
     {
         _uiSlider.onValueChanged.AddListener(OnSliderValueChanged);
@@ -28,6 +30,8 @@ public class PlayerInput : MonoBehaviour
         firstMove = false;
     } // End ResetFirstMove.
 
+    // If its the first move, make the player make its first jump.
+    // Else, invoke slider action to control left to right action.
     public void OnSliderValueChanged(float value)
     {
         if (!firstMove)

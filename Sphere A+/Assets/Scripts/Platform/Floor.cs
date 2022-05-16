@@ -12,6 +12,7 @@ public class Floor : MonoBehaviour
         _gameOverSound = GetComponent<AudioSource>();
     }
 
+    // When the player object comes into contact with the floor object, it will intiate EndGame.
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

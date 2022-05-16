@@ -73,15 +73,6 @@ public class PlayerMovement : MonoBehaviour
         _rb.velocity = new Vector3(_rb.velocity.x, _yVelocity, _rb.velocity.z);
     } // End Jump.
 
-    internal void Revive(Vector3 position)
-    {
-        _endVal -= _jumpDistance;
-
-        _playerPos.x = position.x;
-
-        transform.position = new Vector3(_playerPos.x, 0, _endVal);
-    } // End Revive.
-
     public void HorizontalMovement(float xMovement)
     {
         _playerPos.x = xMovement * _maxPosX;

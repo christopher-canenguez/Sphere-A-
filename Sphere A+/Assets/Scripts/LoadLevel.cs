@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class LoadLevel : MonoBehaviour
 {
+    // Name of the scene you want to load.
     public string nameOfTheSceneToLoad = "";
 
+    // Load the level using SceneManager.
     public void loadLevel()
     {
         SceneManager.LoadScene(nameOfTheSceneToLoad);
-
-        Debug.Log("Button Clicked");
-    }
-}
+    } // End loadLevel.
+} // End script.
 

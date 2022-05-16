@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    // Variables.
     [SerializeField] int maxPosX = 5;
     [SerializeField] MeshRenderer _renderer;
     [SerializeField] GameData _data;
@@ -14,6 +15,7 @@ public class Platform : MonoBehaviour
 
     public static event Action OnCollideWithPlayer;
 
+    // Initiated.
     private void Start()
     {
         _renderer.material = _data.GetRandomMaterial;
@@ -24,6 +26,7 @@ public class Platform : MonoBehaviour
 
         transform.GetChild(0).transform.localPosition = childPos;
 
+        // Animations.
         LeanTween.moveLocalY(_renderer.transform.gameObject, -.5f, .5f).setEase(LeanTweenType.easeOutQuad);
 
         _bounceSound = GetComponent<AudioSource>();
@@ -36,6 +39,7 @@ public class Platform : MonoBehaviour
             return;
         } // End if.
 
+        // When player comes into contact with platform, increase score and bounce.
         if (collision.collider.CompareTag("Player"))
         {
             OnCollideWithPlayer?.Invoke();
@@ -45,6 +49,7 @@ public class Platform : MonoBehaviour
         } // End if.
     } // End OnCollisionEnter.
 
+    // When the platform comes into contact with wall, destroy plaatform object.
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Wall"))

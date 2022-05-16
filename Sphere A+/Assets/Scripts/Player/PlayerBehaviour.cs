@@ -19,6 +19,7 @@ public class PlayerBehaviour : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
     } // End awake.
 
+    // This will be what is called when the game starts, where the player is waiting on the platform for movement to start.
     public void FirstJump()
     {
         if (_triggerFirstMove)
@@ -33,6 +34,7 @@ public class PlayerBehaviour : MonoBehaviour
         _playerMovement.Jump();
     } // End FirstJump.
 
+    // Jump whenever the player comes into contact with the platform.
     private void OnCollisionEnter(Collision collision)
     {
         if (!_triggerFirstMove)
@@ -50,24 +52,10 @@ public class PlayerBehaviour : MonoBehaviour
 
         lastCollidePosition = transform.position;
 
+        // Jump.
         _playerMovement.Jump();
 
+        // Play jump sound whenever the player comes into contact with the platform object.
         SoundController.Instance.PlayAudio(AudioType.JUMP);
     } // End OnCollisionEnter.
-
-    public void OnGameOver()
-    {
-        gameObject.SetActive(false);
-    } // End OnGameOver.
-
-    internal void Revive()
-    {
-        _triggerFirstMove = false;
-
-        _playerInput.ResetFirstMove();
-
-        _playerMovement.Revive(lastCollidePosition);
-
-        gameObject.SetActive(true);
-    } // End Revive.
 } // End script.

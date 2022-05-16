@@ -26,6 +26,7 @@ public class PlatformSpawner : MonoBehaviour
     } // End start.
 
     // Update is called once per frame
+    // Spawn platform method.
     void Update()
     {
         if (_lastSpawnLocation.z - _target.position.z < _targetDistance)
@@ -50,6 +51,7 @@ public class PlatformSpawner : MonoBehaviour
         Time.timeScale = _timeScale;
     } // End OnGameOver.
 
+    // Initiates new platform in a forward position.
     void SpawnPlatform(Transform prefab, Vector3 position)
     {
         Transform newPlatform = Instantiate(prefab, transform);
@@ -59,6 +61,7 @@ public class PlatformSpawner : MonoBehaviour
         _platformNum++;
     } // End SpawnPlatform.
 
+    // Will dictate speed of game as game progresses.
     void CalculateDifficulty()
     {
         if (Mathf.Repeat(_platformNum, _difficultyInterval) == 0)

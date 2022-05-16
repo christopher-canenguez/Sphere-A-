@@ -12,6 +12,7 @@ public class PlayerRenderer : MonoBehaviour
         _renderer = GetComponent<Renderer>();
     } // End Awake.
 
+    // Spawn the player with a new color every time the game is run.
     private void Start()
     {
         _defaultMaterial = _renderer.material;
